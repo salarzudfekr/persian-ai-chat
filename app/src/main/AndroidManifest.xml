@@ -3,7 +3,8 @@
 
     <application
         android:allowBackup="true"
-        android:label="چت فارسی AI"
+        android:icon="@drawable/ic_launcher"
+        android:label="Persian AI Chat"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
