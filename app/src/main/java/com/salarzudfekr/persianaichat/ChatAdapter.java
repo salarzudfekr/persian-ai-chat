@@ -140,7 +140,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             LinearLayout top = new LinearLayout(ctx);
             top.setGravity(Gravity.CENTER_VERTICAL);
             avatar = new TextView(ctx);
-            avatar.setText(\"🤖\");
+            avatar.setText("🤖");
             avatar.setTextSize(20);
             avatar.setPadding(0, 0, dp(8), 0);
             avatar.setGravity(Gravity.CENTER);
@@ -159,7 +159,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             copy.setBackgroundColor(Color.TRANSPARENT);
             copy.setPadding(dp(4), dp(4), dp(4), dp(4));
             copy.setVisibility(GONE);
-            copy.setOnClickListener(cv -> copyText(messages.get(getAdapterPosition()).content));
+            copy.setOnClickListener(cv -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    copyText(messages.get(position).content);
+                }
+            });
             top.addView(copy);
             wrap.addView(top);
 
@@ -189,14 +194,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         void copyText(String txt) {
             ((ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE))
-                .setPrimaryClip(ClipData.newPlainText(\"chat\", txt));
-            Toast.makeText(ctx, \"کپی شد ✓\", Toast.LENGTH_SHORT).show();
+                .setPrimaryClip(ClipData.newPlainText("chat", txt));
+            Toast.makeText(ctx, "کپی شد ✓", Toast.LENGTH_SHORT).show();
         }
         int dp(int v) { return (int)(v * ctx.getResources().getDisplayMetrics().density); }
     }
 
     class LoadingHolder extends RecyclerView.ViewHolder {
-        LinearLayout row; TextView avatar, dots; TextView bubble;
+        LinearLayout row; TextView avatar, dots; TextView bubble; ValueAnimator anim;
         LoadingHolder(View v) {
             super(v);
             row = new LinearLayout(ctx);
@@ -204,7 +209,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             row.setLayoutDirection(LAYOUT_DIRECTION_LTR);
             ((FrameLayout) v).addView(row);
             avatar = new TextView(ctx);
-            avatar.setText(\"🤖\");
+            avatar.setText("🤖");
             avatar.setTextSize(20);
             avatar.setPadding(0, 0, dp(8), 0);
             row.addView(avatar);
@@ -220,12 +225,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             bg.setStroke(dark ? 0 : 1, dark ? 0 : Color.rgb(226, 232, 240));
             bubble.setBackground(bg);
             bubble.setTextColor(dark ? TEXT_BOT_DARK : TEXT_BOT_LIGHT);
-            bubble.setText(\"● ○ ○\");
+            bubble.setText("● ○ ○");
             animateDots();
         }
         void animateDots() {
-            final String[] frames = {\"● ○ ○\", \"○ ● ○\", \"○ ○ ●\"};
-            ValueAnimator anim = ValueAnimator.ofInt(0, 2);
+            if (anim != null && anim.isStarted()) return;
+            final String[] frames = {"● ○ ○", "○ ● ○", "○ ○ ●"};
+            anim = ValueAnimator.ofInt(0, 2);
             anim.setDuration(600);
             anim.setRepeatCount(ValueAnimator.INFINITE);
             anim.setRepeatMode(ValueAnimator.RESTART);
@@ -236,6 +242,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     String formatTime(long ts) {
-        return new SimpleDateFormat(\"HH:mm\", Locale.getDefault()).format(new Date(ts));
+        return new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(ts));
     }
 }

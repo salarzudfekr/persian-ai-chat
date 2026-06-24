@@ -53,7 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MainActivity extends Activity {
-    static final String VERSION = "2.0.0";
+    static final String VERSION = "2.0.1";
     static final String REL = "https://github.com/salarzudfekr/persian-ai-chat/releases/latest";
     static final int BLUE = Color.rgb(37, 99, 235);
     static final int BG_LIGHT = Color.rgb(248, 250, 252);
