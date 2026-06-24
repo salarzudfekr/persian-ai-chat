@@ -53,7 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MainActivity extends Activity {
-    static final String VERSION = "2.0.1";
+    static final String VERSION = "2.0.2";
     static final String REL = "https://github.com/salarzudfekr/persian-ai-chat/releases/latest";
     static final int BLUE = Color.rgb(37, 99, 235);
     static final int BG_LIGHT = Color.rgb(248, 250, 252);
@@ -311,8 +311,7 @@ public class MainActivity extends Activity {
     void updates() {
         new AlertDialog.Builder(this)
             .setTitle("🔄 آپدیت برنامه")
-            .setMessage("نسخه فعلی: " + VERSION + "
-برای دریافت نسخه جدید به صفحه Releases بروید.")
+            .setMessage("نسخه فعلی: " + VERSION + "\nبرای دریافت نسخه جدید به صفحه Releases بروید.")
             .setPositiveButton("باز کردن", (d, w) ->
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(REL))))
             .setNegativeButton("بعداً", null)
